@@ -7,11 +7,11 @@ namespace PetaevDanilKt_31_21.Database
     public class StudentDbContext : DbContext
     {
         // Добавляем таблицы
-        DbSet<Student> Students { get; set; }
-        DbSet<Group> Groups { get; set; }
-        DbSet<Grade> Grades { get; set; }
-        DbSet<Discipline> Disciplines { get; set; }
-        DbSet<Test> Tests { get; set; }
+        public DbSet<Student> Students { get; set; }
+        public DbSet<Group> Groups { get; set; }
+        public DbSet<Grade> Grades { get; set; }
+        public DbSet<Discipline> Disciplines { get; set; }
+        public DbSet<Test> Tests { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
