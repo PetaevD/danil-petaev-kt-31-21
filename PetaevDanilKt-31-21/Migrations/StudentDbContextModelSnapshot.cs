@@ -57,7 +57,7 @@ namespace PetaevDanilKt_31_21.Migrations
                     b.HasKey("Id")
                         .HasName("pk_cd_discipline_discipline_id");
 
-                    b.ToTable("Disciplines");
+                    b.ToTable("cd_discipline", (string)null);
                 });
 
             modelBuilder.Entity("PetaevDanilKt_31_21.Models.Grade", b =>
@@ -138,7 +138,7 @@ namespace PetaevDanilKt_31_21.Migrations
                     b.HasKey("Id")
                         .HasName("pk_cd_group_group_id");
 
-                    b.ToTable("Groups");
+                    b.ToTable("cd_group", (string)null);
                 });
 
             modelBuilder.Entity("PetaevDanilKt_31_21.Models.Student", b =>

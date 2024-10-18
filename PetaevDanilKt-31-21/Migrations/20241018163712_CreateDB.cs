@@ -10,7 +10,7 @@ namespace PetaevDanilKt_31_21.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Disciplines",
+                name: "cd_discipline",
                 columns: table => new
                 {
                     discipline_id = table.Column<int>(type: "integer", nullable: false, comment: "Идентификатор предмета")
@@ -26,7 +26,7 @@ namespace PetaevDanilKt_31_21.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Groups",
+                name: "cd_group",
                 columns: table => new
                 {
                     group_id = table.Column<int>(type: "integer", nullable: false, comment: "Идентификатор группы")
@@ -60,7 +60,7 @@ namespace PetaevDanilKt_31_21.Migrations
                     table.ForeignKey(
                         name: "fk_f_group_id",
                         column: x => x.c_student_group_id,
-                        principalTable: "Groups",
+                        principalTable: "cd_group",
                         principalColumn: "group_id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -81,7 +81,7 @@ namespace PetaevDanilKt_31_21.Migrations
                     table.ForeignKey(
                         name: "fk_f_discipline_id",
                         column: x => x.c_grade_discipline_id,
-                        principalTable: "Disciplines",
+                        principalTable: "cd_discipline",
                         principalColumn: "discipline_id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
@@ -108,7 +108,7 @@ namespace PetaevDanilKt_31_21.Migrations
                     table.ForeignKey(
                         name: "fk_f_discipline_id",
                         column: x => x.DisciplineId,
-                        principalTable: "Disciplines",
+                        principalTable: "cd_discipline",
                         principalColumn: "discipline_id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
@@ -154,13 +154,13 @@ namespace PetaevDanilKt_31_21.Migrations
                 name: "cd_test");
 
             migrationBuilder.DropTable(
-                name: "Disciplines");
+                name: "cd_discipline");
 
             migrationBuilder.DropTable(
                 name: "cd_student");
 
             migrationBuilder.DropTable(
-                name: "Groups");
+                name: "cd_group");
         }
     }
 }
