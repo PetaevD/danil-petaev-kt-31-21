@@ -52,6 +52,9 @@ namespace PetaevDanilKt_31_21.Database.Configurations
                 .HasColumnName("c_is_deleted")
                 .HasColumnType(ColumnType.Bool)
                 .HasComment("Удален ли предмет");
+
+            builder
+                 .ToTable(TableName);
         }
     }
 }

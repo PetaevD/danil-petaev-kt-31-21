@@ -60,6 +60,9 @@ namespace PetaevDanilKt_31_21.Database.Configurations
                 .HasColumnName("c_is_deleted")
                 .HasColumnType(ColumnType.Bool)
                 .HasComment("Удалена ли группа");
+
+            builder
+                 .ToTable(TableName);
         }
     }
 }
