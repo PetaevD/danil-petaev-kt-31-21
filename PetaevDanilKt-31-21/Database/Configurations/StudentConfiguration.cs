@@ -7,30 +7,27 @@ namespace PetaevDanilKt_31_21.Database.Configurations
 {
     public class StudentConfiguration : IEntityTypeConfiguration<Student>
     {
-        private const string TableName = "Student";
+        private const string TableName = "cd_student";
 
         public void Configure(EntityTypeBuilder<Student> builder)
         {
-            // Задаем первичный ключ
             builder
                 .HasKey(p => p.Id)
                 .HasName($"pk_{TableName}_student_id");
 
-            // Для int первичного ключа делаем автогенерацию
             builder
                 .Property(p => p.Id)
                 .ValueGeneratedOnAdd();
 
-            // Свойства таблицы
             builder
                 .Property(p => p.Id)
-                .HasColumnName("id")
+                .HasColumnName("student_id")
                 .HasComment("Идентификатор записи студента");
 
             builder
                 .Property(p => p.FirstName)
                 .IsRequired()
-                .HasColumnName("firstName")
+                .HasColumnName("c_student_firstname")
                 .HasColumnType(ColumnType.String)
                 .HasMaxLength(25)
                 .HasComment("Имя студента");
@@ -38,7 +35,7 @@ namespace PetaevDanilKt_31_21.Database.Configurations
             builder
                 .Property(p => p.LastName)
                 .IsRequired()
-                .HasColumnName("lastName")
+                .HasColumnName("c_student_lastname")
                 .HasColumnType(ColumnType.String)
                 .HasMaxLength(25)
                 .HasComment("Фамилия студента");
@@ -46,7 +43,7 @@ namespace PetaevDanilKt_31_21.Database.Configurations
             builder
                 .Property(p => p.MiddleName)
                 .IsRequired()
-                .HasColumnName("middleName")
+                .HasColumnName("c_student_middlename")
                 .HasColumnType(ColumnType.String)
                 .HasMaxLength(25)
                 .HasComment("Отчество студента");
@@ -54,28 +51,27 @@ namespace PetaevDanilKt_31_21.Database.Configurations
             builder
                 .Property(p => p.GroupId)
                 .IsRequired()
-                .HasColumnName("groupId")
+                .HasColumnName("c_student_group_id")
                 .HasColumnType(ColumnType.Int)
                 .HasComment("Идентификатор группы");
 
             builder
                 .Property(p => p.IsDeleted)
                 .IsRequired()
-                .HasColumnName("isDeleted")
+                .HasColumnName("c_is_deleted")
                 .HasColumnType(ColumnType.Bool)
                 .HasComment("Удален ли пользователь");
 
-            // Связь с таблицей Group
             builder
                 .HasOne(p => p.Group)
                 .WithMany()
                 .HasForeignKey(p => p.GroupId)
                 .OnDelete(DeleteBehavior.Cascade)
-                .HasConstraintName($"fk_{TableName}_group");
+                .HasConstraintName($"fk_f_group_id");
 
             builder
                 .HasIndex(p => p.GroupId)
-                .HasDatabaseName($"ind_{TableName}_fk_group_id");
+                .HasDatabaseName($"ind_{TableName}_fk_f_group_id");
 
             builder
                 .ToTable(TableName);

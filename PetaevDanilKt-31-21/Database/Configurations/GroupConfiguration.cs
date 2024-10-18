@@ -7,30 +7,27 @@ namespace PetaevDanilKt_31_21.Database.Configurations
 {
     public class GroupConfiguration : IEntityTypeConfiguration<Group>
     {
-        private const string TableName = "Group";
+        private const string TableName = "cd_group";
 
         public void Configure(EntityTypeBuilder<Group> builder)
         {
-            // Задаем первичный ключ
             builder
                 .HasKey(p => p.Id)
                 .HasName($"pk_{TableName}_group_id");
 
-            // Автогенерация для первичного ключа
             builder
                 .Property(p => p.Id)
                 .ValueGeneratedOnAdd();
 
-            // Свойства таблицы
             builder
                 .Property(p => p.Id)
-                .HasColumnName("id")
+                .HasColumnName("group_id")
                 .HasComment("Идентификатор группы");
 
             builder
                 .Property(p => p.GroupName)
                 .IsRequired()
-                .HasColumnName("name")
+                .HasColumnName("c_group_name")
                 .HasColumnType(ColumnType.String)
                 .HasMaxLength(25)
                 .HasComment("Название группы");
@@ -38,7 +35,7 @@ namespace PetaevDanilKt_31_21.Database.Configurations
             builder
                 .Property(p => p.Speciality)
                 .IsRequired()
-                .HasColumnName("speciality")
+                .HasColumnName("c_group_speciality")
                 .HasColumnType(ColumnType.String)
                 .HasMaxLength(25)
                 .HasComment("Специальность группы");
@@ -46,21 +43,21 @@ namespace PetaevDanilKt_31_21.Database.Configurations
             builder
                 .Property(p => p.StartYear)
                 .IsRequired()
-                .HasColumnName("startYear")
+                .HasColumnName("c_group_start_year")
                 .HasColumnType(ColumnType.Int)
                 .HasComment("Год начала обучения");
 
             builder
                 .Property(p => p.YearGraduation)
                 .IsRequired()
-                .HasColumnName("yearGraduation")
+                .HasColumnName("c_group_year_graduation")
                 .HasColumnType(ColumnType.Int)
                 .HasComment("Год выпуска");
 
             builder
                 .Property(p => p.IsDeleted)
                 .IsRequired()
-                .HasColumnName("isDeleted")
+                .HasColumnName("c_is_deleted")
                 .HasColumnType(ColumnType.Bool)
                 .HasComment("Удалена ли группа");
         }

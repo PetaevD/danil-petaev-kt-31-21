@@ -8,50 +8,27 @@ namespace PetaevDanilKt_31_21.Controllers
     [Route("[controller]")]
     public class GradeController : ControllerBase
     {
-        private readonly ILogger<GradeController> _logger;
         private readonly IGradeService _gradeService;
 
-        public GradeController(
-            ILogger<GradeController> logger,
-            IGradeService gradeService)
+        public GradeController(IGradeService gradeService)
         {
-            _logger = logger;
             _gradeService = gradeService;
         }
 
         [HttpPost("AddGradeByStudent/{studentId}")]
         public async Task<IActionResult> AddGradeByStudent([FromRoute] int studentId, [FromBody] AddGradeDto newGrade, CancellationToken cancellationToken = default)
         {
-            try
-            {
-                await _gradeService.AddGradeByStudent(studentId, newGrade, cancellationToken);
+            await _gradeService.AddGradeByStudent(studentId, newGrade, cancellationToken);
 
-                return Ok("Оценка успешно добавлена.");
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Error!");
-
-                return BadRequest(ex);
-            }
- 
+            return Ok("Оценка успешно добавлена.");
         }
 
         [HttpPost("ChangeGradeByStudent/{studentId}/{gradeId}")]
         public async Task<IActionResult> ChangeGradeByStudent([FromRoute] int studentId, [FromRoute] int gradeId, [FromBody] ChangeGradeDto updatedGrade, CancellationToken cancellationToken = default)
         {
-            try
-            {
-                await _gradeService.ChangeGradeByStudent(studentId, gradeId, updatedGrade, cancellationToken);
+            await _gradeService.ChangeGradeByStudent(studentId, gradeId, updatedGrade, cancellationToken);
 
-                return Ok("Оценка успешно изменена.");
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Error!");
-
-                return BadRequest(ex.Message);
-            }
+            return Ok("Оценка успешно изменена.");
         }
     }
 }

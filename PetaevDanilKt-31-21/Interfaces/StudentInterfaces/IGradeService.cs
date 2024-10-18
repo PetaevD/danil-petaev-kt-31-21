@@ -23,6 +23,7 @@ namespace PetaevDanilKt_31_21.Interfaces.StudentInterfaces
         public async Task<Grade> AddGradeByStudent(int studentId, AddGradeDto newGrade, CancellationToken cancellationToken = default)
         {
             var student = await _dbContext.Students.FirstOrDefaultAsync(s => s.Id == studentId, cancellationToken);
+
             if (student == null)
             {
                 throw new Exception("Студент не найден.");
@@ -36,6 +37,7 @@ namespace PetaevDanilKt_31_21.Interfaces.StudentInterfaces
             };
 
             _dbContext.Grades.Add(grade);
+
             await _dbContext.SaveChangesAsync(cancellationToken);
 
             return grade;
@@ -44,12 +46,14 @@ namespace PetaevDanilKt_31_21.Interfaces.StudentInterfaces
         public async Task<Grade> ChangeGradeByStudent(int studentId, int gradeId, ChangeGradeDto updatedGrade, CancellationToken cancellationToken = default)
         {
             var student = await _dbContext.Students.FirstOrDefaultAsync(s => s.Id == studentId, cancellationToken);
+
             if (student == null)
             {
                 throw new Exception("Студент не найден.");
             }
 
             var existingGrade = await _dbContext.Grades.FirstOrDefaultAsync(g => g.Id == gradeId && g.StudentId == studentId, cancellationToken);
+
             if (existingGrade == null)
             {
                 throw new Exception("Оценка не найдена.");
@@ -59,6 +63,7 @@ namespace PetaevDanilKt_31_21.Interfaces.StudentInterfaces
             existingGrade.DisciplineId = updatedGrade.DisciplineId;
 
             _dbContext.Grades.Update(existingGrade);
+
             await _dbContext.SaveChangesAsync(cancellationToken);
 
             return existingGrade;

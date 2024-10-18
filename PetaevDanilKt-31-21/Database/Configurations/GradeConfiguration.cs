@@ -7,44 +7,41 @@ namespace PetaevDanilKt_31_21.Database.Configurations
 {
     public class GradeConfiguration : IEntityTypeConfiguration<Grade>
     {
-        private const string TableName = "Grade";
+        private const string TableName = "cd_grade";
 
         public void Configure(EntityTypeBuilder<Grade> builder)
         {
-            // Задаем первичный ключ
             builder
                 .HasKey(p => p.Id)
                 .HasName($"pk_{TableName}_grade_id");
 
-            // Автогенерация для первичного ключа
             builder
                 .Property(p => p.Id)
                 .ValueGeneratedOnAdd();
 
-            // Свойства таблицы
             builder
                 .Property(p => p.Id)
-                .HasColumnName("id")
+                .HasColumnName("grade_id")
                 .HasComment("Идентификатор оценки");
 
             builder
                 .Property(p => p.Score)
                 .IsRequired()
-                .HasColumnName("score")
+                .HasColumnName("c_grade_score")
                 .HasColumnType(ColumnType.Int)
                 .HasComment("Оценка");
 
             builder
                  .Property(p => p.StudentId)
                  .IsRequired()
-                 .HasColumnName("studentId")
+                 .HasColumnName("c_grade_student_id")
                  .HasColumnType(ColumnType.Int)
                  .HasComment("Идентификатор студента");
 
             builder
                  .Property(p => p.DisciplineId)
                  .IsRequired()
-                 .HasColumnName("disciplineId")
+                 .HasColumnName("c_grade_discipline_id")
                  .HasColumnType(ColumnType.Int)
                  .HasComment("Идентификатор предмета");
 
@@ -52,6 +49,7 @@ namespace PetaevDanilKt_31_21.Database.Configurations
                 .HasOne(p => p.Student)
                 .WithMany()
                 .HasForeignKey(p => p.StudentId)
+                .HasConstraintName("fk_f_student_id")
                 .OnDelete(DeleteBehavior.Cascade);
 
             builder
@@ -65,10 +63,11 @@ namespace PetaevDanilKt_31_21.Database.Configurations
                 .HasOne(p => p.Discipline)
                 .WithMany()
                 .HasForeignKey(p => p.DisciplineId)
+                .HasConstraintName("fk_f_discipline_id")
                 .OnDelete(DeleteBehavior.Cascade);
 
             builder
-                .HasIndex(p => p.DisciplineId, $"ind_{TableName}_fk_discipline_id");
+                .HasIndex(p => p.DisciplineId, $"ind_{TableName}_fk_f_discipline_id");
 
             builder
                  .Navigation(p => p.Discipline)
