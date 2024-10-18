@@ -22,27 +22,12 @@ namespace PetaevDanilKt_31_21.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("GradeStudent", b =>
-                {
-                    b.Property<int>("GradesId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("StudentsId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("GradesId", "StudentsId");
-
-                    b.HasIndex("StudentsId");
-
-                    b.ToTable("GradeStudent");
-                });
-
             modelBuilder.Entity("PetaevDanilKt_31_21.Models.Discipline", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
-                        .HasColumnName("id")
+                        .HasColumnName("discipline_id")
                         .HasComment("Идентификатор предмета");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
@@ -51,26 +36,26 @@ namespace PetaevDanilKt_31_21.Migrations
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("varchar")
-                        .HasColumnName("disciplineName")
+                        .HasColumnName("c_discipline_name")
                         .HasComment("Название предмета");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bool")
-                        .HasColumnName("isDeleted")
+                        .HasColumnName("c_is_deleted")
                         .HasComment("Удален ли предмет");
 
                     b.Property<bool>("IsHumanities")
                         .HasColumnType("bool")
-                        .HasColumnName("isHumanities")
+                        .HasColumnName("c_discipline_is_humanities")
                         .HasComment("Гуманитарное направление");
 
                     b.Property<bool>("IsTechnical")
                         .HasColumnType("bool")
-                        .HasColumnName("isTechnical")
+                        .HasColumnName("c_discipline_is_technical")
                         .HasComment("Техническое направление");
 
                     b.HasKey("Id")
-                        .HasName("pk_Discipline_discipline_id");
+                        .HasName("pk_cd_discipline_discipline_id");
 
                     b.ToTable("Disciplines");
                 });
@@ -80,25 +65,34 @@ namespace PetaevDanilKt_31_21.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
-                        .HasColumnName("id")
+                        .HasColumnName("grade_id")
                         .HasComment("Идентификатор оценки");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<int>("DisciplineId")
-                        .HasColumnType("integer");
+                        .HasColumnType("int4")
+                        .HasColumnName("c_grade_discipline_id")
+                        .HasComment("Идентификатор предмета");
 
                     b.Property<int>("Score")
                         .HasColumnType("int4")
-                        .HasColumnName("score")
+                        .HasColumnName("c_grade_score")
                         .HasComment("Оценка");
 
+                    b.Property<int>("StudentId")
+                        .HasColumnType("int4")
+                        .HasColumnName("c_grade_student_id")
+                        .HasComment("Идентификатор студента");
+
                     b.HasKey("Id")
-                        .HasName("pk_Grade_grade_id");
+                        .HasName("pk_cd_grade_grade_id");
 
-                    b.HasIndex(new[] { "DisciplineId" }, "ind_Grade_fk_discipline_id");
+                    b.HasIndex(new[] { "DisciplineId" }, "ind_cd_grade_fk_f_discipline_id");
 
-                    b.ToTable("Grade", (string)null);
+                    b.HasIndex(new[] { "StudentId" }, "ind_cd_grade_fk_student_id");
+
+                    b.ToTable("cd_grade", (string)null);
                 });
 
             modelBuilder.Entity("PetaevDanilKt_31_21.Models.Group", b =>
@@ -106,7 +100,7 @@ namespace PetaevDanilKt_31_21.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
-                        .HasColumnName("id")
+                        .HasColumnName("group_id")
                         .HasComment("Идентификатор группы");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
@@ -115,34 +109,34 @@ namespace PetaevDanilKt_31_21.Migrations
                         .IsRequired()
                         .HasMaxLength(25)
                         .HasColumnType("varchar")
-                        .HasColumnName("name")
+                        .HasColumnName("c_group_name")
                         .HasComment("Название группы");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bool")
-                        .HasColumnName("isDeleted")
+                        .HasColumnName("c_is_deleted")
                         .HasComment("Удалена ли группа");
 
                     b.Property<string>("Speciality")
                         .IsRequired()
                         .HasMaxLength(25)
                         .HasColumnType("varchar")
-                        .HasColumnName("speciality")
+                        .HasColumnName("c_group_speciality")
                         .HasComment("Специальность группы");
 
                     b.Property<int?>("StartYear")
                         .IsRequired()
                         .HasColumnType("int4")
-                        .HasColumnName("startYear")
+                        .HasColumnName("c_group_start_year")
                         .HasComment("Год начала обучения");
 
                     b.Property<int>("YearGraduation")
                         .HasColumnType("int4")
-                        .HasColumnName("yearGraduation")
+                        .HasColumnName("c_group_year_graduation")
                         .HasComment("Год выпуска");
 
                     b.HasKey("Id")
-                        .HasName("pk_Group_group_id");
+                        .HasName("pk_cd_group_group_id");
 
                     b.ToTable("Groups");
                 });
@@ -152,7 +146,7 @@ namespace PetaevDanilKt_31_21.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
-                        .HasColumnName("id")
+                        .HasColumnName("student_id")
                         .HasComment("Идентификатор записи студента");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
@@ -161,40 +155,40 @@ namespace PetaevDanilKt_31_21.Migrations
                         .IsRequired()
                         .HasMaxLength(25)
                         .HasColumnType("varchar")
-                        .HasColumnName("firstName")
+                        .HasColumnName("c_student_firstname")
                         .HasComment("Имя студента");
 
                     b.Property<int>("GroupId")
                         .HasColumnType("int4")
-                        .HasColumnName("groupId")
+                        .HasColumnName("c_student_group_id")
                         .HasComment("Идентификатор группы");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bool")
-                        .HasColumnName("isDeleted")
+                        .HasColumnName("c_is_deleted")
                         .HasComment("Удален ли пользователь");
 
                     b.Property<string>("LastName")
                         .IsRequired()
                         .HasMaxLength(25)
                         .HasColumnType("varchar")
-                        .HasColumnName("lastName")
+                        .HasColumnName("c_student_lastname")
                         .HasComment("Фамилия студента");
 
                     b.Property<string>("MiddleName")
                         .IsRequired()
                         .HasMaxLength(25)
                         .HasColumnType("varchar")
-                        .HasColumnName("middleName")
+                        .HasColumnName("c_student_middlename")
                         .HasComment("Отчество студента");
 
                     b.HasKey("Id")
-                        .HasName("pk_Student_student_id");
+                        .HasName("pk_cd_student_student_id");
 
                     b.HasIndex("GroupId")
-                        .HasDatabaseName("ind_Student_fk_group_id");
+                        .HasDatabaseName("ind_cd_student_fk_f_group_id");
 
-                    b.ToTable("Student", (string)null);
+                    b.ToTable("cd_student", (string)null);
                 });
 
             modelBuilder.Entity("PetaevDanilKt_31_21.Models.Test", b =>
@@ -202,7 +196,7 @@ namespace PetaevDanilKt_31_21.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
-                        .HasColumnName("id")
+                        .HasColumnName("test_id")
                         .HasComment("Идентификатор зачета");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
@@ -212,37 +206,22 @@ namespace PetaevDanilKt_31_21.Migrations
 
                     b.Property<bool>("IsPassed")
                         .HasColumnType("bool")
-                        .HasColumnName("isPassed")
+                        .HasColumnName("c_test_is_passed")
                         .HasComment("Зачет сдан/не сдан");
 
                     b.Property<int>("StudentId")
                         .HasColumnType("integer");
 
                     b.HasKey("Id")
-                        .HasName("pk_Test_test_id");
+                        .HasName("pk_cd_test_test_id");
 
                     b.HasIndex("DisciplineId")
-                        .HasDatabaseName("ind_Test_fk_discipline_id");
+                        .HasDatabaseName("ind_cd_test_fk_f_discipline_id");
 
                     b.HasIndex("StudentId")
-                        .HasDatabaseName("ind_Test_fk_student_id");
+                        .HasDatabaseName("ind_cd_test_fk_f_student_id");
 
-                    b.ToTable("Test", (string)null);
-                });
-
-            modelBuilder.Entity("GradeStudent", b =>
-                {
-                    b.HasOne("PetaevDanilKt_31_21.Models.Grade", null)
-                        .WithMany()
-                        .HasForeignKey("GradesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("PetaevDanilKt_31_21.Models.Student", null)
-                        .WithMany()
-                        .HasForeignKey("StudentsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.ToTable("cd_test", (string)null);
                 });
 
             modelBuilder.Entity("PetaevDanilKt_31_21.Models.Grade", b =>
@@ -251,9 +230,19 @@ namespace PetaevDanilKt_31_21.Migrations
                         .WithMany()
                         .HasForeignKey("DisciplineId")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .IsRequired()
+                        .HasConstraintName("fk_f_discipline_id");
+
+                    b.HasOne("PetaevDanilKt_31_21.Models.Student", "Student")
+                        .WithMany()
+                        .HasForeignKey("StudentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_f_student_id");
 
                     b.Navigation("Discipline");
+
+                    b.Navigation("Student");
                 });
 
             modelBuilder.Entity("PetaevDanilKt_31_21.Models.Student", b =>
@@ -263,7 +252,7 @@ namespace PetaevDanilKt_31_21.Migrations
                         .HasForeignKey("GroupId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
-                        .HasConstraintName("fk_Student_group");
+                        .HasConstraintName("fk_f_group_id");
 
                     b.Navigation("Group");
                 });
@@ -275,14 +264,14 @@ namespace PetaevDanilKt_31_21.Migrations
                         .HasForeignKey("DisciplineId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
-                        .HasConstraintName("fk_Test_discipline");
+                        .HasConstraintName("fk_f_discipline_id");
 
                     b.HasOne("PetaevDanilKt_31_21.Models.Student", "Student")
                         .WithMany()
                         .HasForeignKey("StudentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
-                        .HasConstraintName("fk_Test_student");
+                        .HasConstraintName("fk_f_student_id");
 
                     b.Navigation("Discipline");
 
